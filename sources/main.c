@@ -6,47 +6,15 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/10/28 19:20:53 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/10/29 18:49:04 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem-in.h"
 
-/*
-** -------------- PARSING DU NOMBRE DE FOURMIS -------------------
-** Il peut y avoir des '#commentaire' avant le nombre de fourmis
-** le premier caractere different en dessous DOIT etre le nb de fourmis
-** Cas d'erreurs : 	- ## \n
-**					- Un espace \n
-**					- Autre chose qu'un seul nombre sur la 'bonne ligne'
-**
-*/
-
-void	get_ant(t_ant *ant)
+void	is_conforme(t_ant *ant)
 {
-	t_ant	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = ant;
-	while (tmp != NULL && tmp->str[0] == '#' && tmp->str[1] != '#')
-		tmp = tmp->next;
-	if (tmp == NULL)
-		ft_error("ERROR : No ants");
-	if (ft_isdigit(tmp->str[0]))
-	{
-		while (tmp->str[i] != '\0')
-		{
-			if (ft_isdigit(tmp->str[i]) == 0)
-				ft_error("ERROR : Non-conforming anthill");
-			i++;
-		}
-		ant->nb = ft_atoi(tmp->str);
-	}
-	else
-		ft_error("ERROR : Non-conforming anthill");
-	if (ant->nb < 1)
-		ft_error("ERROR : Wrong number of ants");
+	
 }
 
 t_ant	*create_link(char *str)
@@ -99,7 +67,12 @@ int		main(void)
 		ft_error("Malloc error");
 	ant->nb = 0;
 	get_ant(ant);
-	ft_printf("ant->nb : %d\n", ant->nb);
+	ft_printf("\nant->nb : %d\n", ant->nb);
+	get_start(ant);
+	ft_printf("ant->start : %s\n", ant->start);
+	get_end(ant);
+	ft_printf("ant->end : %s\n", ant->end);
+	is_conforme(ant);
 	/*while (ant != NULL)
 	{
 		ft_printf("%s\n", ant->str);

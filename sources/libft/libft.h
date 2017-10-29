@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 17:09:11 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/08/24 16:47:36 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/10/29 17:53:11 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,4 +131,12 @@ int					*ft_taballoc(int *ptr, int size);
 void				ft_error(char *str);
 void				cleartab(int *tab, int len);
 void				tabset(int *tab, int c, int len);
+
+/*
+** Librairy used for lem-in
+*/
+
+int					str_digit(char *str);
+char				*strcpy_until(char *dst, const char *src, char c);
+
 #endif

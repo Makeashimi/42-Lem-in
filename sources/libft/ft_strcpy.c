@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/13 11:40:53 by jcharloi          #+#    #+#             */
-/*   Updated: 2016/12/09 14:42:26 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/10/29 17:52:51 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,20 @@ char	*ft_strcpy(char *dst, const char *src)
 
 	i = 0;
 	while (src[i] != '\0')
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+char	*strcpy_until(char *dst, const char *src, char c)
+{
+	int i;
+
+	i = 0;
+	while (src[i] != '\0' && src[i] != c)
 	{
 		dst[i] = src[i];
 		i++;
