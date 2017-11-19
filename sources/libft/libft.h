@@ -138,5 +138,7 @@ void				tabset(int *tab, int c, int len);
 
 int					str_digit(char *str);
 char				*strcpy_until(char *dst, const char *src, char c);
+int					str_nbr_i(char *str, char c);
+int					str_digit_until(char *str, char c);
 
 #endif

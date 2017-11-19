@@ -6,19 +6,18 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 18:47:09 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/10/29 18:48:13 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/19 21:41:02 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "lem-in.h"
+#include "lem_in.h"
 
 /*
 ** -------------- PARSING DU NOMBRE DE FOURMIS -------------------
 ** Il peut y avoir des '#commentaire' avant le nombre de fourmis
 ** le premier caractere different en dessous DOIT etre le nb de fourmis
-** Cas d'erreurs : 	- ## \n
-**					- Un espace \n
-**					- Autre chose qu'un seul nombre sur la 'bonne ligne'
+** Cas d'erreurs : 	- Autre chose qu'un nombre
+**					- Nombre superieur à un int
 **
 ** VERIFIER QUE Y A PAS DEUX FOIS L'UN DES TROIS PARAMÈTRES À RECUPÉRER
 **
@@ -26,88 +25,114 @@
 ** Une salle ne commencera jamais par le caractère L ou le caractère #
 ** elle peut avoir un nom très diversifié
 ** Cas d'erreurs :  - ## entre le start et la ligne supposée etre la salle
-**					- Pas de coordonnées après ou mal écrites
-**					- 
+**					- Pas plus/pas moins de 2 espaces
+**                  - Un caractere avant chaque espace
+**					- Un 0 apres le deuxieme espace
+**					- Un L devant le nom/de - dans le nom
+**					- Coordonnees negatives/superieures à un int
+**
+** -------------------- PARSING DES TUBES -----------------------
+** Relie des salles avec un '-' au milieu
+** Cas d'erreurs :  - Un espace ou un - en str[0]
+**					- Pas de -
+**					- Un 0 apres le -
 */
 
-void	get_ant(t_ant *ant)
+int				find_pipe(char *str)
+{
+	int		i;
+
+	i = 0;
+	if (str_nbr_i(str, ' ') != 0 && str_nbr_i(str, '-') != 1)
+		return (0);
+	if (str[i] == '-')
+		return (0);
+	while (str[i] != '\0')
+	{
+		if (str[i] == '-')
+		{
+			i++;
+			break ;
+		}
+		i++;
+	}
+	if (str[i] == 0)
+		return (0);
+	return (1);
+}
+
+static t_room	*create_room(void)
+{
+	t_room	*room;
+
+	if (!(room = (t_room*)malloc(sizeof(t_room))))
+		ft_error("Malloc error");
+	room->next = NULL;
+	return (room);
+}
+
+static t_room	*link_room(t_room *room)
+{
+	t_room *tmp;
+
+	tmp = room;
+	if (tmp == NULL)
+	{
+		room = create_room();
+		return (room);
+	}
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = create_room();
+	return (room);
+}
+
+void			find_room(t_ant *cpy, t_room *room)
+{
+	t_ant	*tmp;
+	int		i;
+
+	i = 0;
+	tmp = cpy;
+	if (tmp == NULL)
+		ft_error("No room");
+	while (tmp != NULL && find_pipe(tmp->str) == 0)
+	{
+		while (tmp->str[0] == '#')
+			tmp = tmp->next;
+		room = link_room(room);
+		check_form(tmp->str);
+		check_content(room, tmp->str);
+		ft_printf("room->name : %s\n", room->name);
+		ft_printf("room->x : %ld\n", room->x);
+		ft_printf("room->y : %ld\n", room->y);
+		tmp = tmp->next;
+	}
+}
+
+void			get_ant(t_ant *ant)
 {
 	t_ant	*tmp;
 
 	tmp = ant;
 	while (tmp != NULL && tmp->str[0] == '#' && tmp->str[1] != '#')
 		tmp = tmp->next;
-	if (tmp == NULL)
-		ft_error("ERROR : No ants");
-	if (ft_isdigit(tmp->str[0]))
+	if (ft_isdigit(tmp->str[0]) && tmp != NULL)
 	{
-		if (str_digit(tmp->str))
-			ant->nb = ft_atoi(tmp->str);
+		if (str_digit(tmp->str) == 1)
+		{
+			if (ft_strlen(tmp->str) > 10)
+				ft_error("ERROR : Number of ants is bigger than an integer");
+			else
+				ant->nb = ft_atol(tmp->str);
+		}
 		else
-			ft_error("ERROR : Non-conforming anthill");
+			ft_error("ERROR : Non-conforming number of ants");
 	}
 	else
-		ft_error("ERROR : No ants");
+		ft_error("ERROR : No ants or non-conforming number of ants");
+	if (ant->nb > 2147483647)
+		ft_error("ERROR : Number of ants is bigger than an integer");
 	if (ant->nb < 1)
 		ft_error("ERROR : Wrong number of ants");
-}
-
-void	get_start(t_ant *ant)
-{
-	t_ant	*tmp;
-
-	tmp = ant;
-	while (tmp != NULL && ft_strcmp(tmp->str, "##start") != 0)
-		tmp = tmp->next;
-	if (tmp->str == NULL)
-		ft_error("ERROR : No start room");
-	if (ft_strcmp(tmp->str, "##start") == 0)
-	{
-			tmp = tmp->next;
-			while (tmp != NULL && tmp->str[0] == '#' && tmp->str[1] != '#')
-				tmp = tmp->next;
-			if (tmp == NULL || (tmp->str[0] == '#' && tmp->str[1] == '#') || tmp->str[0] == 'L')
-				ft_error("ERROR : Non-conforming anthill");
-			else
-			{
-				if (ft_strsrchi(tmp->str, ' ') == -1)
-					ft_error("Non-conforming anthill");
-				if(!(ant->start = (char*)malloc(sizeof(char) * ft_strlen(tmp->str))))
-					ft_error("Malloc error");
-				ant->start = strcpy_until(ant->start, tmp->str, ' ');
-				return ;
-			}
-	}
-	else
-		ft_error("ERROR : No start room");
-}
-
-void	get_end(t_ant *ant)
-{
-	t_ant	*tmp;
-
-	tmp = ant;
-	while (tmp != NULL && ft_strcmp(tmp->str, "##end") != 0)
-		tmp = tmp->next;
-	if (tmp->str == NULL)
-		ft_error("ERROR : No end room");
-	if (ft_strcmp(tmp->str, "##end") == 0)
-	{
-			tmp = tmp->next;
-			while (tmp != NULL && tmp->str[0] == '#' && tmp->str[1] != '#')
-				tmp = tmp->next;
-			if (tmp == NULL || (tmp->str[0] == '#' && tmp->str[1] == '#') || tmp->str[0] == 'L')
-				ft_error("ERROR : Non-conforming anthill");
-			else
-			{
-				if (ft_strsrchi(tmp->str, ' ') == -1)
-					ft_error("Non-conforming anthill");
-				if(!(ant->end = (char*)malloc(sizeof(char) * ft_strlen(tmp->str))))
-					ft_error("Malloc error");
-				ant->end = strcpy_until(ant->end, tmp->str, ' ');
-				return ;
-			}
-	}
-	else
-		ft_error("ERROR : No end room");
 }

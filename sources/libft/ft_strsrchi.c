@@ -27,3 +27,19 @@ int		ft_strsrchi(const char *s, int c)
 	}
 	return (-1);
 }
+
+int		str_nbr_i(char *str, char c)
+{
+	int		i;
+	int		nbr;
+
+	i = 0;
+	nbr = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] == c)
+			nbr++;
+		i++;
+	}
+	return (nbr);
+}

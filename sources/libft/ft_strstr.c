@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include <string.h>
-#include <stdio.h>
 #include "libft.h"
 
 static	int	ft_verif(int i, char *big, char *little)
