@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/01 10:06:17 by jcharloi          #+#    #+#              #
-#    Updated: 2017/11/19 21:27:20 by jcharloi         ###   ########.fr        #
+#    Updated: 2017/11/24 16:44:54 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS = -Wall -Wextra -Werror
 NAME = lem-in
 
 SRC_PATH = ./sources/
-SRC_NAME = main.c get_principal.c room.c
+SRC_NAME = main.c get_principal.c room.c pipe.c
 OBJ_PATH = ./objects/
 OBJ_NAME = $(SRC_NAME:.c=.o)
 LIB_PATH = ./sources/libft/
@@ -28,7 +28,7 @@ YELLOW = "\033[3;38;5;228m"
 ORANGE = "\033[3;38;5;214m"
 RED = "\033[3;5;49;31m"
 PURPLE = "\033[3;49;35m"
-BLUE = "\033[3;5;49;34m"
+BLUE = "\033[3;49;34m"
 GREEN = "\033[3;33;32m"
 EOC = "\033[0m"
 

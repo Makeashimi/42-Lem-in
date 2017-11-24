@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/19 21:26:12 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/24 22:10:51 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,28 @@ static t_ant	*link_anthill(t_ant *ant, char *str)
 
 int				main(void)
 {
-	t_ant	*ant;
-	t_room	*room;
-	t_ant	*cpy;
-	char	*str;
-	int		ret;
+	t_ant		*ant;
+	t_room		*room;
+	t_ant		*cpy;
+	t_pipe		*pipe;
+	t_global 	*global;
+	char		*str;
+	int			ret;
 
 	ret = 0;
 	ant = NULL;
 	room = NULL;
-	while ((ret = get_next_line(1, &str)) == 1)
+	pipe = NULL;
+	if (!(global = (t_global*)malloc(sizeof(t_global))))
+		ft_error("Malloc error");
+	global->room = NULL;
+	global->pipe = NULL;
+ 	while ((ret = get_next_line(1, &str)) == 1)
 	{
 		if (str[0] == '\0')
 		{
 			ft_strdel(&str);
-			ft_error("ERROR : Non-conforming anthill");
+			break ;
 		}
 		ant = link_anthill(ant, str);
 		ft_strdel(&str);
@@ -84,7 +91,19 @@ int				main(void)
 	while (str_digit(cpy->str) == 0)
 		cpy = cpy->next;
 	cpy = cpy->next;
-	find_room(cpy, room);
+	cpy = find_room(global, cpy, room);
+	while (global->room != NULL)
+	{
+		ft_printf("global->room->name : %s\n", global->room->name);
+		global->room = global->room->next;
+	}
+	check_pipe(global, cpy, pipe);
+	while (global->pipe != NULL)
+	{
+		ft_printf("global->pipe->s1 : %s\n", global->pipe->s1);
+		ft_printf("global->pipe->s2 : %s\n", global->pipe->s2);
+		global->pipe = global->pipe->next;
+	}
 	/*while (ant != NULL)
 	{
 		ft_printf("%s\n", ant->str);

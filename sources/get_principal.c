@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 18:47:09 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/19 21:41:02 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/24 22:05:35 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,29 +38,6 @@
 **					- Un 0 apres le -
 */
 
-int				find_pipe(char *str)
-{
-	int		i;
-
-	i = 0;
-	if (str_nbr_i(str, ' ') != 0 && str_nbr_i(str, '-') != 1)
-		return (0);
-	if (str[i] == '-')
-		return (0);
-	while (str[i] != '\0')
-	{
-		if (str[i] == '-')
-		{
-			i++;
-			break ;
-		}
-		i++;
-	}
-	if (str[i] == 0)
-		return (0);
-	return (1);
-}
-
 static t_room	*create_room(void)
 {
 	t_room	*room;
@@ -84,30 +61,31 @@ static t_room	*link_room(t_room *room)
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	tmp->next = create_room();
-	return (room);
+	return (room->next);
 }
 
-void			find_room(t_ant *cpy, t_room *room)
+t_ant			*find_room(t_global *global, t_ant *cpy, t_room *room)
 {
-	t_ant	*tmp;
-	int		i;
-
-	i = 0;
-	tmp = cpy;
-	if (tmp == NULL)
+	if (cpy == NULL)
 		ft_error("No room");
-	while (tmp != NULL && find_pipe(tmp->str) == 0)
+	while (cpy != NULL && find_pipe(cpy->str) == 0)
 	{
-		while (tmp->str[0] == '#')
-			tmp = tmp->next;
+		while (cpy != NULL && cpy->str[0] == '#')
+			cpy = cpy->next;
+		if (cpy == NULL)
+			ft_error("No room or no pipe");
+		if (find_pipe(cpy->str) == 1)
+			break ;
 		room = link_room(room);
-		check_form(tmp->str);
-		check_content(room, tmp->str);
-		ft_printf("room->name : %s\n", room->name);
-		ft_printf("room->x : %ld\n", room->x);
-		ft_printf("room->y : %ld\n", room->y);
-		tmp = tmp->next;
+		if (global->room == NULL)
+			global->room = room;
+		check_form(cpy->str);
+		check_content(room, cpy->str);
+		cpy = cpy->next;
 	}
+	if (global->room == NULL)
+		ft_error("No room");
+	return (cpy);
 }
 
 void			get_ant(t_ant *ant)
@@ -117,7 +95,7 @@ void			get_ant(t_ant *ant)
 	tmp = ant;
 	while (tmp != NULL && tmp->str[0] == '#' && tmp->str[1] != '#')
 		tmp = tmp->next;
-	if (ft_isdigit(tmp->str[0]) && tmp != NULL)
+	if (tmp != NULL && ft_isdigit(tmp->str[0]))
 	{
 		if (str_digit(tmp->str) == 1)
 		{

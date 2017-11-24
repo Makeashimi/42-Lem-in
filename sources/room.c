@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 21:08:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/19 21:26:19 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/24 16:54:51 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ static void		control_name_room(char *str)
 static void		control_coordinate(char *str)
 {
 	long	nb;
-	int		i;
 
-	i = 0;
 	if (str[0] == '-')
 		ft_error("Not accepting negative coordinate of the room");
 	if (str_digit(str) == 0)
