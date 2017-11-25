@@ -6,17 +6,17 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 17:09:11 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/10/29 17:53:11 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/25 15:46:55 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "ft_printf/ft_printf.h"
 # include <string.h>
 # include <unistd.h>
 # include <stdlib.h>
-# include "ft_printf.h"
 
 typedef struct		s_list
 {

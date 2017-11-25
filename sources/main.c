@@ -6,19 +6,14 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/24 22:10:51 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/25 19:02:16 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
-** Verifier que le nombre de fourmis rentre dans un int ?
-** Les salles sont-elles conformes ?
 ** Deux fois le meme nom de salles ?
-** Deux fois le nombre de fourmis ?
-** Pas de tube avant toutes les salles ?
-** Les tubes sont-ils conformes ?
 ** Si la salle 1 c'est 0 0, la salle 2 c'est different de 0 0 ?
 ** 2147483647
 */
@@ -70,7 +65,7 @@ int				main(void)
 		ft_error("Malloc error");
 	global->room = NULL;
 	global->pipe = NULL;
- 	while ((ret = get_next_line(1, &str)) == 1)
+ 	while ((ret = get_next_line(0, &str)) == 1)
 	{
 		if (str[0] == '\0')
 		{
@@ -87,23 +82,32 @@ int				main(void)
 	ant->nb = 0;
 	cpy = ant;
 	get_ant(ant);
-	ft_printf("\nant->nb : %d\n", ant->nb);
+	//ft_printf("\nant->nb : %d\n", ant->nb);
 	while (str_digit(cpy->str) == 0)
 		cpy = cpy->next;
 	cpy = cpy->next;
 	cpy = find_room(global, cpy, room);
-	while (global->room != NULL)
+	/*while (global->room != NULL)
 	{
-		ft_printf("global->room->name : %s\n", global->room->name);
+		ft_printf("global->room->name : %s ", global->room->name);
+		ft_printf("global->room->x : %d ", global->room->x);
+		ft_printf("global->room->y : %d\n", global->room->y);
 		global->room = global->room->next;
-	}
+	}*/
 	check_pipe(global, cpy, pipe);
-	while (global->pipe != NULL)
+	/*while (global->pipe != NULL)
 	{
-		ft_printf("global->pipe->s1 : %s\n", global->pipe->s1);
+		ft_printf("global->pipe->s1 : %s ", global->pipe->s1);
 		ft_printf("global->pipe->s2 : %s\n", global->pipe->s2);
 		global->pipe = global->pipe->next;
-	}
+	}*/
+	cpy = ant;
+	get_start(ant, cpy);
+	ft_printf("start : %s\n", ant->start);
+	get_end(ant, cpy);
+	ft_printf("end : %s\n", ant->end);
+	compare_room(global);
+	compare_pipe(global);
 	/*while (ant != NULL)
 	{
 		ft_printf("%s\n", ant->str);

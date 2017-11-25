@@ -6,13 +6,13 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 16:41:10 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/24 22:08:42 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/25 21:09:32 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_pipe			*create_pipe()
+t_pipe		*create_pipe(void)
 {
 	t_pipe		*pipe;
 
@@ -22,7 +22,7 @@ t_pipe			*create_pipe()
 	return (pipe);
 }
 
-t_pipe			*link_pipe(t_pipe *pipe)
+t_pipe		*link_pipe(t_pipe *pipe)
 {
 	t_pipe *tmp;
 
@@ -38,7 +38,7 @@ t_pipe			*link_pipe(t_pipe *pipe)
 	return (pipe->next);
 }
 
-int				find_pipe(char *str)
+int			find_pipe(char *str)
 {
 	int		i;
 
@@ -67,7 +67,7 @@ void		get_pipe(t_pipe *pipe, char *str)
 	int		o;
 
 	i = 0;
-	o = 0; 
+	o = 0;
 	pipe->s1 = (char*)malloc(sizeof(char) * ft_strsrchi(str, '-') + 1);
 	while (str[i] != '-')
 	{
@@ -88,23 +88,18 @@ void		get_pipe(t_pipe *pipe, char *str)
 
 void		check_pipe(t_global *global, t_ant *cpy, t_pipe *pipe)
 {
-	t_ant	*tmp;
-
-	tmp = cpy;
-	if (tmp == NULL)
+	if (cpy == NULL)
 		ft_error("No pipe");
-	while (tmp != NULL)
+	while (cpy != NULL)
 	{
-		while (tmp != NULL && tmp->str[0] == '#')
-			tmp = tmp->next;
-		if (tmp == NULL)
+		while (cpy != NULL && cpy->str[0] == '#')
+			cpy = cpy->next;
+		if (cpy == NULL || find_pipe(cpy->str) == 0)
 			break ;
-		if (find_pipe(tmp->str) == 0)
-			ft_error("Non-conforming pipe");
 		pipe = link_pipe(pipe);
 		if (global->pipe == NULL)
 			global->pipe = pipe;
-		get_pipe(pipe, tmp->str);
-		tmp = tmp->next;
+		get_pipe(pipe, cpy->str);
+		cpy = cpy->next;
 	}
 }

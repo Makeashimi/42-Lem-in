@@ -6,16 +6,16 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/01 10:06:17 by jcharloi          #+#    #+#              #
-#    Updated: 2017/11/24 16:44:54 by jcharloi         ###   ########.fr        #
+#    Updated: 2017/11/25 19:00:24 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -MMD
 NAME = lem-in
 
 SRC_PATH = ./sources/
-SRC_NAME = main.c get_principal.c room.c pipe.c
+SRC_NAME = main.c get_principal.c room.c pipe.c parsing.c parsing2.c
 OBJ_PATH = ./objects/
 OBJ_NAME = $(SRC_NAME:.c=.o)
 LIB_PATH = ./sources/libft/
@@ -49,10 +49,11 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@$(CC) -o $@ -c $< $(CFLAGS)
 	@echo $(ORANGE)"Your $@ is compiled !"$(EOC)
 
+-include $(OBJ:.o=.d)
+
 clean:
 	@make clean -C $(LIB_PATH)
-	@rm -f $(OBJ)
-	@rmdir $(OBJ_PATH) 2> /dev/null || true
+	@rm -rf $(OBJ_PATH)
 	@echo $(YELLOW)"Make clean done !"$(EOC)
 
 fclean: clean

@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 18:47:09 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/24 22:05:35 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/25 17:55:10 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void			get_ant(t_ant *ant)
 	t_ant	*tmp;
 
 	tmp = ant;
-	while (tmp != NULL && tmp->str[0] == '#' && tmp->str[1] != '#')
+	while (tmp != NULL && tmp->str[0] == '#')
 		tmp = tmp->next;
 	if (tmp != NULL && ft_isdigit(tmp->str[0]))
 	{
