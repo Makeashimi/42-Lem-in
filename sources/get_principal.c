@@ -6,13 +6,14 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 18:47:09 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/25 17:55:10 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/27 20:18:35 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
 /*
+** 2147483647
 ** -------------- PARSING DU NOMBRE DE FOURMIS -------------------
 ** Il peut y avoir des '#commentaire' avant le nombre de fourmis
 ** le premier caractere different en dessous DOIT etre le nb de fourmis

@@ -6,13 +6,13 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 16:41:10 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/25 21:09:32 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/27 20:23:39 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_pipe		*create_pipe(void)
+static t_pipe	*create_pipe(void)
 {
 	t_pipe		*pipe;
 
@@ -22,7 +22,7 @@ t_pipe		*create_pipe(void)
 	return (pipe);
 }
 
-t_pipe		*link_pipe(t_pipe *pipe)
+static t_pipe	*link_pipe(t_pipe *pipe)
 {
 	t_pipe *tmp;
 
@@ -38,7 +38,7 @@ t_pipe		*link_pipe(t_pipe *pipe)
 	return (pipe->next);
 }
 
-int			find_pipe(char *str)
+int				find_pipe(char *str)
 {
 	int		i;
 
@@ -61,7 +61,7 @@ int			find_pipe(char *str)
 	return (1);
 }
 
-void		get_pipe(t_pipe *pipe, char *str)
+static void		get_pipe(t_pipe *pipe, char *str)
 {
 	int		i;
 	int		o;
@@ -86,7 +86,7 @@ void		get_pipe(t_pipe *pipe, char *str)
 	pipe->s2[o] = '\0';
 }
 
-void		check_pipe(t_global *global, t_ant *cpy, t_pipe *pipe)
+void			check_pipe(t_global *global, t_ant *cpy, t_pipe *pipe)
 {
 	if (cpy == NULL)
 		ft_error("No pipe");

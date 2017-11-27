@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 16:25:23 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/25 19:03:00 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/27 20:10:11 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 ** 			- Pas de start/end
 **			- 2x start ou/et end
 **			- 2x meme nom de salle/coordonnees
+**			- Une salle qui n'est pas dans un tube
 */
 
 int		cmp_room_coordinate(t_room *tmp, int x, int y)
@@ -58,6 +59,8 @@ void	compare_room(t_global *global)
 			ft_error("Two times the same name of a room");
 		if (cmp_room_coordinate(tmp->next, tmp->x, tmp->y) == 1)
 			ft_error("Two times the same coordinate of a room");
+		if (is_pipe(global->pipe, tmp->name) == 0)
+			ft_error("A room is not linked");
 		tmp = tmp->next;
 	}
 }

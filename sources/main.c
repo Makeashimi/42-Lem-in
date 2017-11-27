@@ -6,17 +6,11 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/25 19:02:16 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/27 20:28:08 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
-/*
-** Deux fois le meme nom de salles ?
-** Si la salle 1 c'est 0 0, la salle 2 c'est different de 0 0 ?
-** 2147483647
-*/
 
 static t_ant	*create_link(char *str)
 {
@@ -103,11 +97,12 @@ int				main(void)
 	}*/
 	cpy = ant;
 	get_start(ant, cpy);
-	ft_printf("start : %s\n", ant->start);
+	//ft_printf("start : %s\n", ant->start);
 	get_end(ant, cpy);
-	ft_printf("end : %s\n", ant->end);
+	//ft_printf("end : %s\n", ant->end);
 	compare_room(global);
 	compare_pipe(global);
+	start_algo(global);
 	/*while (ant != NULL)
 	{
 		ft_printf("%s\n", ant->str);
