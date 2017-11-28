@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/27 20:27:56 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/28 18:44:00 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ typedef struct		s_ant
 	long			nb;
 	char			*start;
 	char			*end;
+	int				*tab;
+	int				i;
 	struct s_ant	*next;
 }					t_ant;
 
@@ -65,6 +67,6 @@ int					is_pipe(t_pipe *pipe, char *str);
 ** Fonctions used for the real algo
 */
 
-void				start_algo(t_global *global);
+void				start_algo(t_global *global, t_ant *ant);
 
 #endif

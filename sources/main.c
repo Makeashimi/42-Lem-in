@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/27 20:28:08 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/11/28 19:17:55 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int				main(void)
 		ft_error("Malloc error");
 	if (ant == NULL)
 		ft_error("ERROR : Anthill is empty");
+	ant->i = 0;
 	ant->nb = 0;
 	cpy = ant;
 	get_ant(ant);
@@ -102,7 +103,7 @@ int				main(void)
 	//ft_printf("end : %s\n", ant->end);
 	compare_room(global);
 	compare_pipe(global);
-	start_algo(global);
+	start_algo(global, ant);
 	/*while (ant != NULL)
 	{
 		ft_printf("%s\n", ant->str);
