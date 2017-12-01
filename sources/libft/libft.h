@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/11/10 17:09:11 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/25 15:46:55 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/01 19:10:28 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,5 +140,6 @@ int					str_digit(char *str);
 char				*strcpy_until(char *dst, const char *src, char c);
 int					str_nbr_i(char *str, char c);
 int					str_digit_until(char *str, char c);
+void				cpy_tab(int *tab1, int *tab2, int len);
 
 #endif

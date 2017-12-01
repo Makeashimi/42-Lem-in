@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/29 19:58:12 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/01 16:08:37 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ typedef struct		s_ant
 	char			*end;
 	int				*tab;
 	int				i;
+	int				nb_pipe;
+	int				var;
+	char			**path;
 	struct s_ant	*next;
 }					t_ant;
 
