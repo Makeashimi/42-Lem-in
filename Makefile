@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/09/01 10:06:17 by jcharloi          #+#    #+#              #
-#    Updated: 2017/12/01 13:33:29 by jcharloi         ###   ########.fr        #
+#    Updated: 2017/12/02 13:23:14 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ CFLAGS = -Wall -Wextra -Werror -MMD
 NAME = lem-in
 
 SRC_PATH = ./sources/
-SRC_NAME = main.c get_principal.c room.c pipe.c parsing.c parsing2.c start.c
+SRC_NAME = main.c get_principal.c room.c pipe.c parsing.c parsing2.c start.c tools.c
 OBJ_PATH = ./objects/
 OBJ_NAME = $(SRC_NAME:.c=.o)
 LIB_PATH = ./sources/libft/

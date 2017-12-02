@@ -6,7 +6,7 @@
 #    By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/11/11 16:15:21 by jcharloi          #+#    #+#              #
-#    Updated: 2017/10/29 14:26:16 by jcharloi         ###   ########.fr        #
+#    Updated: 2017/12/02 13:46:23 by jcharloi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,10 +81,8 @@ SRC = 	ft_memset.c \
 		ft_unsignedbase.c \
 		ft_print_wchart.c \
 		ft_abs.c \
-		ft_taballoc.c \
-		ft_error.c \
-		cleartab.c \
-		tabset.c
+		tab.c \
+		ft_error.c
 OBJ = $(SRC:.c=.o)
 
 all: $(NAME)

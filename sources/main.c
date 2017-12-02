@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/01 16:07:24 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/02 20:13:09 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,8 @@ int				main(void)
 	t_ant		*cpy;
 	t_pipe		*pipe;
 	t_global 	*global;
+	t_lst		*lst;
+	t_path		*path;
 	char		*str;
 	int			ret;
 
@@ -55,6 +57,8 @@ int				main(void)
 	ant = NULL;
 	room = NULL;
 	pipe = NULL;
+	lst = NULL;
+	path = NULL;
 	if (!(global = (t_global*)malloc(sizeof(t_global))))
 		ft_error("Malloc error");
 	global->room = NULL;
@@ -75,7 +79,6 @@ int				main(void)
 		ft_error("ERROR : Anthill is empty");
 	ant->i = 0;
 	ant->nb = 0;
-	ant->nb_pipe = 2147483647;
 	cpy = ant;
 	get_ant(ant);
 	//ft_printf("\nant->nb : %d\n", ant->nb);
@@ -104,7 +107,7 @@ int				main(void)
 	//ft_printf("end : %s\n", ant->end);
 	compare_room(global);
 	compare_pipe(global);
-	start_algo(global, ant);
+	start_algo(global, ant, lst);
 	/*while (ant != NULL)
 	{
 		ft_printf("%s\n", ant->str);

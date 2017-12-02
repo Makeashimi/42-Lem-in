@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/01 16:08:37 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/02 22:01:42 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,8 @@ typedef struct		s_ant
 	long			nb;
 	char			*start;
 	char			*end;
-	int				*tab;
 	int				i;
-	int				nb_pipe;
-	int				var;
-	char			**path;
+	int				*tab;
 	struct s_ant	*next;
 }					t_ant;
 
@@ -50,6 +47,18 @@ typedef struct		s_global
 	t_pipe			*pipe;
 }					t_global;
 
+typedef struct 		s_path
+{
+	char			*str;
+	struct s_path	*next;
+}					t_path;
+
+typedef struct 		s_lst
+{
+	t_path			*path;
+	struct s_lst	*next;
+}					t_lst;
+
 /*
 ** Fonctions used for parsing
 */
@@ -70,6 +79,9 @@ int					is_pipe(t_pipe *pipe, char *str);
 ** Fonctions used for the real algo
 */
 
-void				start_algo(t_global *global, t_ant *ant);
+void				start_algo(t_global *global, t_ant *ant, t_lst *lst);
+void				init_tab(t_pipe *pipe, t_ant *ant);
+t_lst				*link_lst(t_lst **lst);
+void				save_path(t_lst *lst, char *here);
 
 #endif
