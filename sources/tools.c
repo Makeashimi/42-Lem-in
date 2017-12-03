@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 13:20:28 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/02 21:56:02 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/03 15:37:14 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void			save_path(t_lst *lst, char *here)
 	tmp->str[ft_strlen(here)] = '\0';
 }
 
-static int		tube_len(t_pipe *pipe)
+int		tube_len(t_pipe *pipe)
 {
 	t_pipe		*tmp;
 	int			i;

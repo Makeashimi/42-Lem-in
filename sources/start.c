@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/27 20:25:47 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/02 21:56:12 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/03 21:09:43 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_pipe		*tube_get(t_ant *ant, t_pipe *pipe, char *str)
 	return (NULL);
 }
 
-int			search_path(t_ant *ant, t_global *global, t_lst *lst, char *here)
+void		search_path(t_ant *ant, t_global *global, t_lst *lst, char *here)
 {
 	t_pipe	*tmp;
 	int		i;
@@ -55,6 +55,7 @@ int			search_path(t_ant *ant, t_global *global, t_lst *lst, char *here)
 	tmp = global->pipe;
 	while (ft_strcmp(tmp->s1, ant->end) != 0 && ft_strcmp(tmp->s2, ant->end) != 0)
 	{
+		//ft_printf("here : %s\n", here);
 		tmp = tube_get(ant, global->pipe, here);
 		if (tmp == NULL)
 		{
@@ -68,10 +69,61 @@ int			search_path(t_ant *ant, t_global *global, t_lst *lst, char *here)
 		else
 			here = tmp->s1;
 		save_path(lst, here);
-		i++;
 		ft_printf("tmp->s1 = {%s} tmp->s2 = {%s} here : %s\n", tmp->s1, tmp->s2, here);
 	}
+}
+
+int			is_tab_zero(int *tab, t_pipe *pipe)
+{
+	int		len;
+	int		i;
+
+	i = 0;
+	len = tube_len(pipe);
+	while (i < len)
+	{
+		if (tab[i] == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int			path_len(t_path *path)
+{
+	int		i;
+
+	i = 0;
+	while (path != NULL)
+	{
+		i++;
+		path = path->next;
+	}
 	return (i);
+}
+
+t_lst		*cmp_path(t_lst *lst)
+{
+	t_lst	*tmp_lst;
+	t_lst	*cpy;
+	int nb;
+	int nb_b;
+
+	nb_b = 0;
+	nb = 2147483647;
+	tmp_lst = lst;
+	while (tmp_lst != NULL)
+	{
+		nb_b = path_len(tmp_lst->path);
+		ft_printf("nb_b : %d\n", nb_b);
+		if (nb_b < nb)
+		{
+			nb = nb_b;
+			cpy = tmp_lst;
+		}
+		tmp_lst = tmp_lst->next;
+	}
+	return (cpy);
 }
 
 void		start_algo(t_global *global, t_ant *ant, t_lst *lst)
@@ -79,27 +131,28 @@ void		start_algo(t_global *global, t_ant *ant, t_lst *lst)
 	t_lst	*cpy;
 	char	*here;
 	int		nb;
-	int i = 0;
+	int j = 0;
 
 	nb = 0;
 	init_tab(global->pipe, ant);
 	here = ant->start;
 	cpy = lst;
-	while (i < 3)
+	while (is_tab_zero(ant->tab, global->pipe))
 	{
 		cpy = link_lst(&lst);
-		nb = search_path(ant, global, cpy, here);
-		ft_printf("nb : %d\n", nb);
-		i++;
-	}
-	while (lst != NULL)
-	{
-		while (lst->path != NULL)
+		search_path(ant, global, cpy, here);
+		j = 0;
+		while (j < 13)
 		{
-			ft_printf("%s\n", lst->path->str);
-			lst->path = lst->path->next;
+			ft_printf("tab : %d\n", ant->tab[j]);
+			j++;
 		}
-		ft_printf("\n");
-		lst = lst->next;
+	}
+	//pas de chemins possible = ERROR
+	lst = cmp_path(lst);
+	while (lst->path != NULL)
+	{
+		ft_printf("%s\n", lst->path->str);
+		lst->path = lst->path->next;
 	}
 }

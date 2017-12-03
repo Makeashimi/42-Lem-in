@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/02 22:01:42 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/03 15:37:24 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ int					is_pipe(t_pipe *pipe, char *str);
 
 void				start_algo(t_global *global, t_ant *ant, t_lst *lst);
 void				init_tab(t_pipe *pipe, t_ant *ant);
+int					tube_len(t_pipe *pipe);
 t_lst				*link_lst(t_lst **lst);
 void				save_path(t_lst *lst, char *here);
 
