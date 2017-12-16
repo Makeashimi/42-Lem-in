@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/03 15:37:24 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/16 19:39:27 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ typedef struct		s_ant
 	struct s_ant	*next;
 }					t_ant;
 
+/*
+** Special structures for room and pipe
+*/
+
 typedef struct		s_room
 {
 	char			*name;
@@ -41,23 +45,39 @@ typedef struct		s_pipe
 	struct s_pipe	*next;
 }					t_pipe;
 
-typedef struct		s_global
-{
-	t_room			*room;
-	t_pipe			*pipe;
-}					t_global;
+/*
+** Get the path and the pathcpy
+*/
 
 typedef struct 		s_path
 {
 	char			*str;
 	struct s_path	*next;
-}					t_path;
+}				t_path;
+
+typedef struct 		s_pathcpy
+{
+	char				*strcpy;
+	struct s_pathcpy	*next;
+}					t_pathcpy;
 
 typedef struct 		s_lst
 {
 	t_path			*path;
+	t_pathcpy		*pathcpy;
 	struct s_lst	*next;
 }					t_lst;
+
+/*
+** Global structure to get everything
+*/
+
+typedef struct		s_global
+{
+	t_room			*room;
+	t_pipe			*pipe;
+	t_lst			*lst;
+}					t_global;
 
 /*
 ** Fonctions used for parsing
@@ -79,10 +99,13 @@ int					is_pipe(t_pipe *pipe, char *str);
 ** Fonctions used for the real algo
 */
 
-void				start_algo(t_global *global, t_ant *ant, t_lst *lst);
+void				start_algo(t_global *global, t_ant *ant);
 void				init_tab(t_pipe *pipe, t_ant *ant);
 int					tube_len(t_pipe *pipe);
+int					check_tab_zero(t_global *global, int *tab);
 t_lst				*link_lst(t_lst **lst);
+t_path				*link_path(t_lst *lst);
+t_pathcpy			*link_pathcpy(t_lst *lst);
 void				save_path(t_lst *lst, char *here);
 
 #endif

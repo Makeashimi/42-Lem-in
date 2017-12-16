@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 13:20:28 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/03 15:37:14 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/16 19:40:05 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,30 @@ t_path			*link_path(t_lst *lst)
 	return (tmp->next);
 }
 
-void			save_path(t_lst *lst, char *here)
+static t_pathcpy	*create_pathcpy(void)
 {
-	t_path		*tmp;
+	t_pathcpy		*pathcpy;
 
-	tmp = link_path(lst);
-	if (!(tmp->str = (char*)malloc(sizeof(char) * ft_strlen(here) + 1)))
+	if (!(pathcpy = (t_pathcpy*)malloc(sizeof(t_pathcpy))))
 		ft_error("Malloc error");
-	tmp->str = ft_strcpy(tmp->str, here);
-	tmp->str[ft_strlen(here)] = '\0';
+	pathcpy->next = NULL;
+	return (pathcpy);
+}
+
+t_pathcpy			*link_pathcpy(t_lst *lst)
+{
+	t_pathcpy		*tmp;
+
+	tmp = lst->pathcpy;
+	if (tmp == NULL)
+	{
+		lst->pathcpy = create_pathcpy();
+		return (lst->pathcpy);
+	}
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	tmp->next = create_pathcpy();
+	return (tmp->next);
 }
 
 int		tube_len(t_pipe *pipe)
@@ -89,7 +104,23 @@ int		tube_len(t_pipe *pipe)
 		tmp = tmp->next;
 	}
 	return (i);
-}	
+}
+
+int		check_tab_zero(t_global *global, int *tab)
+{
+	int		len;
+	int		i;
+
+	i = 0;
+	len = tube_len(global->pipe);
+	while (i < len)
+	{
+		if (tab[i] == 0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
 
 void			init_tab(t_pipe *pipe, t_ant *ant)
 {

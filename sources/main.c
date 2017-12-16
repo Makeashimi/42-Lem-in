@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/03 16:32:14 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/16 14:44:32 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int				main(void)
 	//ft_printf("end : %s\n", ant->end);
 	compare_room(global);
 	compare_pipe(global);
-	start_algo(global, ant, lst);
+	start_algo(global, ant);
 	/*while (ant != NULL)
 	{
 		ft_printf("%s\n", ant->str);
