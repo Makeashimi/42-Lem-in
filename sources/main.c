@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/16 14:44:32 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/19 18:47:59 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ int				main(void)
 		ft_error("Malloc error");
 	global->room = NULL;
 	global->pipe = NULL;
+	global->lst = NULL;
  	while ((ret = get_next_line(0, &str)) == 1)
 	{
 		if (str[0] == '\0')

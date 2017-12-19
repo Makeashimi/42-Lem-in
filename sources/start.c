@@ -6,11 +6,25 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:52:53 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/16 22:33:55 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/19 23:36:07 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+
+t_lst	*get_previous(t_lst *lst)
+{
+	t_lst	*tmp;
+	t_lst	*previous;
+
+	tmp = lst;
+	if (tmp == NULL)
+		return (NULL);
+	while (tmp->next != NULL)
+		tmp = tmp->next;
+	previous = tmp;
+	return (previous);
+}
 
 void	save_here(t_lst *lst, char *here)
 {
@@ -27,62 +41,31 @@ void	save_here(t_lst *lst, char *here)
 	tmpcpy->strcpy = ft_strcpy(tmpcpy->strcpy, here);
 	tmp->str[ft_strlen(here)] = '\0';
 	tmpcpy->strcpy[ft_strlen(here)] = '\0';
-	ft_printf("str : %s\n", tmp->str);
-	ft_printf("strcpy : %s\n", tmpcpy->strcpy);
+	ft_printf("path : %s\n", tmp->str);
+	ft_printf("pathcpy : %s\n", tmpcpy->strcpy);
 }
 
-t_lst	*get_previous(t_lst *lst)
+void	what_inside_pathcpy(t_lst *previous, t_lst *lst)
 {
-	t_lst	*tmp;
-	t_lst	*previous;
-
-	tmp = lst;
-	previous = tmp;
-	while (tmp->next != NULL)
-	{
-		previous = tmp;
-		tmp = tmp->next;
-	}
-	return (previous);
-}
-
-/*
-void	what_inside_pathcpy(t_lst *lst)
-{
-	t_lst		*tmplst;
-	t_lst		*previous;
-	t_path 		*tmppath;
 	t_pathcpy	*tmpcpy;
+	//previous = pathcpy
+	t_path 		*tmp;
+	//lst = dernier maillon vide path
 
-	//tmplst contient le nouveau maillon accuillant mon nouveau chemin
-	tmplst = link_lst(&lst);
-	//previous contient le previous->pathcpy precedent
-	previous = get_previous(lst);
 	if (previous == NULL)
 		return ;
-	tmppath = tmplst->path;
 	tmpcpy = previous->pathcpy;
-	while (tmpcpy != NULL)
+	tmp = lst->path;
+	while (tmpcpy->next != NULL)
 	{
-		ft_printf("path : %s\n", tmpcpy->strcpy);
-		tmpcpy = tmpcpy->next;
-	}
-	while (tmpcpy != NULL)
-	{
-		tmppath = link_path(lst);
-		if (!(tmppath->str = (char*)malloc(sizeof(char) * ft_strlen(tmpcpy->strcpy))))
+		tmp = link_path(lst);
+		if (!(tmp->str = (char*)malloc(sizeof(char) * ft_strlen(tmpcpy->strcpy))))
 			ft_error("Malloc error");
-		tmppath->str = ft_strcpy(tmppath->str, tmpcpy->strcpy);
-		tmppath->str[ft_strlen(tmpcpy->strcpy)] = '\0';
+		tmp->str = ft_strcpy(tmp->str, tmpcpy->strcpy);
+		tmp->str[ft_strlen(tmpcpy->strcpy)] = '\0';
 		tmpcpy = tmpcpy->next;
 	}
-	tmppath = tmplst->path;
-	while (tmppath != NULL)
-	{
-		ft_printf("str ici : %s\n", tmppath->str);
-		tmppath = tmppath->next;
-	}
-}*/
+}
 
 char	*search_path(t_global *global, t_ant *ant, char *here)
 {
@@ -90,12 +73,11 @@ char	*search_path(t_global *global, t_ant *ant, char *here)
 
 	tmp = global->pipe;
 	ant->i = 0;
-	
 	while (tmp != NULL)
 	{
 		if (ant->tab[ant->i] == 0 && (ft_strcmp(tmp->s1, here) == 0 || ft_strcmp(tmp->s2, here) == 0))
 		{
-			save_here(global->lst, here);
+			save_here(get_previous(global->lst), here);
 			if (ft_strcmp(here, ant->end) == 0)
 				return (here);
 			if (ft_strcmp(tmp->s1, here) == 0)
@@ -130,8 +112,8 @@ void	remove_path(t_lst *lst, char *here)
 		//ft_printf("maillon a supprimer : %s\nprevious : %s\n", tmp->strcpy, previous->strcpy);
 		if (ft_strcmp(tmp->strcpy, here) == 0)
 		{
-			ft_printf("maillon a supprimer : %s\n", tmp->strcpy);
-			ft_printf("maillon d'avant : %s\n", previous->strcpy);
+			//ft_printf("maillon a supprimer : %s\n", tmp->strcpy);
+			//ft_printf("maillon d'avant : %s\n", previous->strcpy);
 			previous->next = tmp->next;
 			free(tmp);
 			tmp = previous->next;
@@ -175,23 +157,34 @@ char	*move_back(t_global *global, t_ant *ant, char *here)
 
 void	start_algo(t_global *global, t_ant *ant)
 {
-	//t_lst	*tmp;
+	t_lst	*previous;
+	t_lst	*tmp;
 	char	*here;
 	//int i = 0;
 
 	here = ant->start;
 	init_tab(global->pipe, ant);
-	global->lst = link_lst(&global->lst);
-	//tmp = global->lst;
-	while (check_tab_zero(global, ant->tab) == 1)
-	{
-		//what_inside_pathcpy(global->lst);
+	//while (check_tab_zero(global, ant->tab) == 1)
+	//{
+		previous = get_previous(global->lst);
+		tmp = link_lst(&global->lst);
+		what_inside_pathcpy(previous, tmp);
 		while (ft_strcmp(here, ant->end) != 0)
 			here = search_path(global, ant, here);
-		ft_printf("fin de la premiere boucle : %s\n", here);
+		//ft_printf("fin de la premiere boucle : %s\n", here);
 		here = move_back(global, ant, here);
-		ft_printf("fin de la deuxieme boucle : %s\n", here);
-	}
+		//ft_printf("fin de la deuxieme boucle : %s\n", here);
+		previous = get_previous(global->lst);
+		tmp = link_lst(&global->lst);
+		what_inside_pathcpy(previous, tmp);
+		while (ft_strcmp(here, ant->end) != 0)
+			here = search_path(global, ant, here);
+		//ft_printf("fin de la premiere boucle : %s\n", here);
+		here = move_back(global, ant, here);
+		//ft_printf("fin de la deuxieme boucle : %s\n", here);
+		print_lst(global->lst);
+		ft_printf("\n");
+	//}
 
 	/*while (i < 14)
 	{
@@ -199,10 +192,14 @@ void	start_algo(t_global *global, t_ant *ant)
 		i++;
 	}*/
 
-	while (global->lst->pathcpy != NULL)
+	while (global->lst != NULL)
 	{
-		ft_printf("strcpy : %s\n", global->lst->pathcpy->strcpy);
-		global->lst->pathcpy = global->lst->pathcpy->next;
+		while (global->lst->path != NULL)
+		{
+			ft_printf("strcpy : %s\n", global->lst->path->str);
+			global->lst->path = global->lst->path->next;
+		}
+		ft_printf("\n");
+		global->lst = global->lst->next;
 	}
-	//ft_printf("here final : %s\n", here);
 }
