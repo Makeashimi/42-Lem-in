@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/19 23:04:59 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/20 22:46:58 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ typedef struct 		s_pathcpy
 typedef struct 		s_lst
 {
 	t_path			*path;
-	t_pathcpy		*pathcpy;
+	t_pathcpy		*pathcpy;	
 	struct s_lst	*next;
 }					t_lst;
 
@@ -107,5 +107,6 @@ t_lst				*link_lst(t_lst **lst);
 t_path				*link_path(t_lst *lst);
 t_pathcpy			*link_pathcpy(t_lst *lst);
 void				save_path(t_lst *lst, char *here);
+char				*move_back(t_global *global, t_ant *ant, char *here);
 
 #endif
