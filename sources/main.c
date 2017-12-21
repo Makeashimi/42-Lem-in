@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/19 18:47:59 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/21 19:32:25 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static t_ant	*link_anthill(t_ant *ant, char *str)
 int				main(void)
 {
 	t_ant		*ant;
-	t_room		*room;
 	t_ant		*cpy;
+	t_room		*room;
 	t_pipe		*pipe;
 	t_global 	*global;
 	t_lst		*lst;
