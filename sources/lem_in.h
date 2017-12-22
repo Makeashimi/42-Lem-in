@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/21 21:06:24 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/22 20:20:37 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ typedef struct 		s_path
 {
 	char			*str;
 	struct s_path	*next;
-}				t_path;
+}					t_path;
 
 typedef struct 		s_lst
 {

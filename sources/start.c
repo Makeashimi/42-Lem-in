@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:52:53 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/21 23:11:02 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/22 22:59:13 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,33 +51,6 @@ void	save_here(t_lst *lst, char *here)
 		ft_error("Malloc error");
 	tmp->str = ft_strcpy(tmp->str, here);
 	tmp->str[ft_strlen(here)] = '\0';
-	tmp->next = NULL;
-}
-
-
-char	*search_path(t_global *global, t_ant *ant, char *here)
-{
-	t_pipe	*tmp;
-
-	tmp = global->pipe;
-	ant->i = 0;
-	while (tmp != NULL)
-	{
-		if (ant->tab[ant->i] == 0 && (ft_strcmp(tmp->s1, here) == 0 || ft_strcmp(tmp->s2, here) == 0))
-		{
-			save_here(get_previous(global->lst), here);
-			if (ft_strcmp(here, ant->end) == 0)
-				return (here);
-			if (ft_strcmp(tmp->s1, here) == 0)
-				here = tmp->s2;
-			else
-				here = tmp->s1;
-			ant->tab[ant->i] = 1;
-		}
-		ant->i++;
-		tmp = tmp->next;
-	}
-	return (here);
 }
 
 void	remove_path(t_path *path, char *here)
@@ -112,22 +85,34 @@ void	remove_path(t_path *path, char *here)
 	}
 }
 
+
+
 char	*move_back(t_global *global, t_lst *lst, t_ant *ant, char *here)
 {
 	t_pipe	*tmp;
+	int		boucle;
 
 	while (1)
 	{
 		tmp = global->pipe;
 		ant->i = 0;
+		boucle = 0;
 		while (tmp != NULL)
 		{
-			if (ant->tab[ant->i] == 0 && ft_strcmp(here, ant->end) != 0 && (ft_strcmp(here, tmp->s1) == 0 || ft_strcmp(here, tmp->s2) == 0))
+			if (ant->tab[ant->i] == 3)
+			{
+				ant->tab[ant->i] = 0;	
+				boucle = 1;
+			}
+			else if (ant->tab[ant->i] == 0 && ft_strcmp(here, ant->end) != 0 && (ft_strcmp(here, tmp->s1) == 0 || ft_strcmp(here, tmp->s2) == 0))
 				return (here);
 			if (ant->tab[ant->i] == 1 && (ft_strcmp(here, tmp->s1) == 0 || ft_strcmp(here, tmp->s2) == 0))
 			{
 				remove_path(get_previous(lst)->path, here);
-				ant->tab[ant->i] = 2;
+				if (boucle)
+					ant->tab[ant->i] = 0;
+				else
+					ant->tab[ant->i] = 2;
 				if (ft_strcmp(tmp->s1, here) == 0)
 					here = tmp->s2;
 				else
@@ -159,6 +144,57 @@ void	copy_path(t_lst *previous, t_lst *end)
 		last = last->next;
 	}
 }
+/*
+int		valid_pipe(t_pipe *tmp, char *here, t_ant *ant)
+{
+	if (ft_strcmp(tmp->s1, here) == 0 || ft_strcmp(tmp->s2, here) == 0)
+	{
+		if ((ft_strcmp(tmp->s1, ant->start) != 0 && ft_strcmp(tmp->s2, ant->start) != 0)
+		|| ft_strcmp(here, ant->start) == 0)
+			return (1);
+	}
+	return (0);
+}
+*/
+char	*search_path(t_global *global, t_ant *ant, char *here)
+{
+	t_pipe	*tmp;
+	char	*tmp_s;
+
+	tmp = global->pipe;
+	ant->i = 0;
+	while (tmp != NULL)
+	{
+		if (ant->tab[ant->i] == 0 && (ft_strcmp(tmp->s1, here) == 0 || ft_strcmp(tmp->s2, here) == 0))
+		{
+			tmp_s = here;
+			if (ft_strcmp(here, ant->end) == 0)
+				return (here);
+			if (ft_strcmp(tmp->s1, here) == 0)
+				here = tmp->s2;
+			else
+				here = tmp->s1;
+			if (ft_strcmp(here, ant->start) == 0)
+			{
+				ant->tab[ant->i] = 3;
+				here = tmp_s;
+			}
+			else
+			{
+				save_here(get_previous(global->lst), tmp_s);
+				ant->tab[ant->i] = 1;
+				if (ft_strcmp(here, ant->end) == 0)
+				{
+					save_here(get_previous(global->lst), here);
+					return (here);
+				}
+			}
+		}
+		ant->i++;
+		tmp = tmp->next;
+	}
+	return (here);
+}
 
 void	start_algo(t_global *global, t_ant *ant)
 {
@@ -181,18 +217,28 @@ void	start_algo(t_global *global, t_ant *ant)
 		{
 			here = search_path(global, ant, here);
 			if (i > 0 && ft_strcmp(here, double_here) == 0)
+			{
 				break ;
+			}
 			double_here = ft_strdup(here);
 			i++;
 		}
 		previous = tmp;
 		tmp = link_lst(&global->lst);
 		copy_path(previous, tmp);
+		/*int j = 0;
+		t_pipe *test = global->pipe;
+		while (test)
+		{
+			ft_printf("%s-%s: %d\n", test->s1, test->s2, ant->tab[j]);
+			test = test->next;
+			j++;
+		}*/
 		here = move_back(global, tmp, ant, here);
-		//ft_printf("\n");
+		ft_printf("\n\n");
 	}
 	tmp = global->lst;
-	while (tmp->next && tmp->next->next)
+	while (tmp->next != NULL && tmp->next->next != NULL)
 		tmp = tmp->next;
 	free(tmp->next->path);
 	tmp->next->path = NULL;
