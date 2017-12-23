@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/21 19:32:25 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/23 20:27:35 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int				main(void)
 		ft_error("ERROR : Anthill is empty");
 	ant->i = 0;
 	ant->nb = 0;
+	ant->here = NULL;
+	ant->boucle = 0;
 	cpy = ant;
 	get_ant(ant);
 	//ft_printf("\nant->nb : %d\n", ant->nb);

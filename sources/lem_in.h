@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/22 20:20:37 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/23 22:40:19 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@ typedef struct		s_ant
 	long			nb;
 	char			*start;
 	char			*end;
+	char			*here;
 	int				i;
+	int				boucle;
 	int				*tab;
 	struct s_ant	*next;
 }					t_ant;
@@ -95,9 +97,16 @@ int					is_pipe(t_pipe *pipe, char *str);
 void				start_algo(t_global *global, t_ant *ant);
 void				init_tab(t_pipe *pipe, t_ant *ant);
 int					tube_len(t_pipe *pipe);
+void				get_paths(t_global *global, t_ant *ant);
 int					check_tab_zero(t_global *global, int *tab);
 t_lst				*link_lst(t_lst **lst);
 t_path				*link_path(t_lst *lst);
 void				save_path(t_lst *lst, char *here);
+t_lst				*previous_lst(t_lst *lst);
+char				*move_back(t_global *global, t_lst *lst, t_ant *ant);
+void				copy_path(t_lst *previous, t_lst *end);
+int					cmp_lst(t_lst *lst, char *here);
+int					cmp_path(t_pipe *tmp, t_ant *ant);
+void				show_paths(t_global *global);
 
 #endif

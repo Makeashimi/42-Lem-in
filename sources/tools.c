@@ -6,63 +6,41 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 13:20:28 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/21 19:33:35 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/23 20:07:46 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static t_lst	*create_lst(void)
+void	save_path(t_lst *lst, char *here)
 {
-	t_lst		*lst;
+	t_path 		*tmp;
 
-	if (!(lst = (t_lst*)malloc(sizeof(t_lst))))
+	if (cmp_lst(lst, here) == 1)
+		return ;
+	tmp = link_path(lst);
+	if (!(tmp->str = (char*)malloc(sizeof(char) * ft_strlen(here) + 1)))
 		ft_error("Malloc error");
-	lst->path = NULL;
-	lst->next = NULL;
-	return (lst);
+	tmp->str = ft_strcpy(tmp->str, here);
+	tmp->str[ft_strlen(here)] = '\0';
 }
 
-t_lst			*link_lst(t_lst **lst)
+void	copy_path(t_lst *previous, t_lst *end)
 {
-	t_lst		*tmp;
+	t_path	*last;
+	t_path	*now;
 
-	tmp = *lst;
-	if (tmp == NULL)
+	last = previous->path;
+	now = end->path;
+	while (last != NULL)
 	{
-		*lst = create_lst();
-		return (*lst);
+		now = link_path(end);
+		if (!(now->str = (char*)malloc(sizeof(char) * ft_strlen(last->str) + 1)))
+			ft_error("Malloc error");
+		now->str = ft_strcpy(now->str, last->str);
+		now->str[ft_strlen(last->str)] = '\0';
+		last = last->next;
 	}
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = create_lst();
-	return (tmp->next);
-}
-
-static t_path	*create_path(void)
-{
-	t_path		*path;
-
-	if (!(path = (t_path*)malloc(sizeof(t_path))))
-		ft_error("Malloc error");
-	path->next = NULL;
-	return (path);
-}
-
-t_path			*link_path(t_lst *lst)
-{
-	t_path		*tmp;
-
-	tmp = lst->path;
-	if (tmp == NULL)
-	{
-		lst->path = create_path();
-		return (lst->path);
-	}
-	while (tmp->next != NULL)
-		tmp = tmp->next;
-	tmp->next = create_path();
-	return (tmp->next);
 }
 
 int		tube_len(t_pipe *pipe)
@@ -96,7 +74,7 @@ int		check_tab_zero(t_global *global, int *tab)
 	return (0);
 }
 
-void			init_tab(t_pipe *pipe, t_ant *ant)
+void	init_tab(t_pipe *pipe, t_ant *ant)
 {
 	int 		len;
 
@@ -105,5 +83,3 @@ void			init_tab(t_pipe *pipe, t_ant *ant)
 		ft_error("Malloc error");
 	tabset(ant->tab, 0, len);
 }
-
-
