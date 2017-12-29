@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/28 19:36:39 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/29 22:26:18 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,14 @@
 # define LEM_IN_H
 
 # include "libft/libft.h"
+
+# define YELLOW "\033[38;5;228m"
+# define ORANGE "\033[38;5;214m"
+# define RED "\033[49;31m"
+# define PURPLE "\033[49;35m"
+# define BLUE "\033[49;34m"
+# define GREEN "\033[33;32m"
+# define EOC "\033[0m"
 
 typedef struct		s_ant
 {
@@ -31,6 +39,7 @@ typedef struct		s_ant
 
 typedef struct		s_path
 {
+	int				close;
 	int				distance;
 	char			*from;
 	struct s_path	*next;
@@ -83,6 +92,15 @@ int					is_pipe(t_pipe *pipe, char *str);
 */
 
 void				start_algo(t_global *global, t_ant *ant);
+t_path				*create_path(void);
 t_path				*link_path(t_path *path);
+
+/*
+** A SUPPRIMER !
+*/
+
+void	print_room(t_room *room);
+void	print_path(t_path *path);
+void	print_test(t_room *room);
 
 #endif
