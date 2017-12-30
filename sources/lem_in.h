@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/29 22:26:18 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/30 20:31:47 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,11 @@ int					is_pipe(t_pipe *pipe, char *str);
 */
 
 void				start_algo(t_global *global, t_ant *ant);
-t_path				*create_path(void);
-t_path				*link_path(t_path *path);
+int					check_end(t_ant *ant, t_room *room);
+void				init_path(t_room *room);
+int					copy_last(t_ant *ant, t_room *room);
+t_path				*get_smaller_path(t_room *room, char *str);
+
 
 /*
 ** A SUPPRIMER !

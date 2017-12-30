@@ -6,13 +6,13 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/23 15:46:30 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/29 19:31:00 by jcharloi         ###   ########.fr       */
+/*   Updated: 2017/12/30 19:18:34 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_path			*create_path(void)
+static t_path	*create_path(void)
 {
 	t_path	*path;
 
@@ -25,7 +25,7 @@ t_path			*create_path(void)
 	return (path);
 }
 
-t_path			*link_path(t_path *path)
+static t_path	*link_path(t_path *path)
 {
 	t_path	*tmp;
 
@@ -38,5 +38,17 @@ t_path			*link_path(t_path *path)
 	while (tmp->next != NULL)
 		tmp = tmp->next;
 	tmp->next = create_path();
-	return (tmp->next);
+	return (path);
+}
+
+void			init_path(t_room *room)
+{
+	t_room	*tmp;
+
+	tmp = room;
+	while (tmp != NULL)
+	{
+		tmp->path = link_path(tmp->path);
+		tmp = tmp->next;
+	}
 }
