@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 16:25:23 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/27 20:10:11 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/03 12:39:12 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,11 @@ void	compare_room(t_global *global)
 			ft_error("Two times the same name of a room");
 		if (cmp_room_coordinate(tmp->next, tmp->x, tmp->y) == 1)
 			ft_error("Two times the same coordinate of a room");
-		if (is_pipe(global->pipe, tmp->name) == 0)
+		/*if (is_pipe(global->pipe, tmp->name) == 0)
+		{
+			ft_printf("tmp : %s\n", tmp->name);
 			ft_error("A room is not linked");
+		}*/
 		tmp = tmp->next;
 	}
 }

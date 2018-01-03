@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 21:08:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/25 16:38:46 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/03 11:45:34 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,19 +18,22 @@ void			check_form(char *str)
 
 	i = 0;
 	if (str_nbr_i(str, ' ') != 2)
+	{
+		ft_printf("str : %s\n", str);
 		ft_error("Non-conforming room");
+	}
 	if (str[i] == ' ')
-		ft_error("Non-conforming room");
+		ft_error("Non-conforming room2");
 	while (str[i] != ' ')
 		i++;
 	i++;
 	if (str[i] == ' ')
-		ft_error("Non-conforming room");
+		ft_error("Non-conforming room3");
 	while (str[i] != ' ')
 		i++;
 	i++;
 	if (str[i] == ' ' || str[i] == 0)
-		ft_error("Non-conforming room");
+		ft_error("Non-conforming room4");
 }
 
 static void		control_name_room(char *str)

@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 19:00:06 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/27 20:23:50 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/03 12:39:08 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,19 +33,19 @@ static int	cmp_pipe(t_room *room, char *str)
 	return (0);
 }
 
-int			is_pipe(t_pipe *pipe, char *str)
-{
-	t_pipe	*tmp;
+// int			is_pipe(t_pipe *pipe, char *str)
+// {
+// 	t_pipe	*tmp;
 
-	tmp = pipe;
-	while (tmp != NULL)
-	{
-		if (ft_strcmp(str, tmp->s1) == 0 || ft_strcmp(str, tmp->s2) == 0)
-			return (1);
-		tmp = tmp->next;
-	}
-	return (0);
-}
+// 	tmp = pipe;
+// 	while (tmp != NULL)
+// 	{
+// 		if (ft_strcmp(str, tmp->s1) == 0 || ft_strcmp(str, tmp->s2) == 0)
+// 			return (1);
+// 		tmp = tmp->next;
+// 	}
+// 	return (0);
+// }
 
 static int	is_two_pipe(t_pipe *pipe, char *s1, char *s2)
 {

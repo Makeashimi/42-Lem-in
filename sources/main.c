@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:08:52 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/28 19:13:29 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/03 12:41:04 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_ant	*create_link(char *str)
 
 	if (!(ant = (t_ant*)malloc(sizeof(t_ant))))
 		ft_error("Malloc error");
-	if (!(ant->str = (char*)malloc(sizeof(char) * ft_strlen(str))))
+	if (!(ant->str = (char*)malloc(sizeof(char) * ft_strlen(str) + 1)))
 		ft_error("Malloc error");
 	ant->str = ft_strcpy(ant->str, str);
 	ant->next = NULL;

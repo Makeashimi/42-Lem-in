@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:52:53 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/30 20:52:31 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/03 20:35:38 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,30 @@ void	smaller_distance(t_ant *ant, t_room *room)
 
 void	get_path(t_ant *ant, t_room *room)
 {
-	t_room 		*tmp_r;
-	t_path 		*tmp;
-	t_path 		*path;
+	t_room		*tmp_r;
+	t_path		*tmp;
+	int			i;
 
+	i = 0;
 	tmp = get_smaller_path(room, ant->end);
-	ft_printf("%d - %s\n", tmp->distance + 1, ant->end);
-	ft_printf("%d - %s\n", tmp->distance, tmp->from);
+	if (tmp == NULL)
+		ft_error("No path found");
+	if (!(ant->path = (char**)malloc(sizeof(char*) * (tmp->distance + 2))))
+		ft_error("Malloc error");
+	ant->path[tmp->distance + 1] = NULL;
+
+	if (!(ant->path[i] = (char*)malloc(sizeof(char) * ft_strlen(ant->end) + 1)))
+		ft_error("Malloc error");
+	ant->path[i] = ft_strcpy(ant->path[i], ant->end);
+	ft_printf("ant->path[i] : %s\n", ant->path[i]);
+
+	i++;
+	if (!(ant->path[i] = (char*)malloc(sizeof(char) * ft_strlen(tmp->from) + 1)))
+		ft_error("Malloc error");
+	ant->path[i] = ft_strcpy(ant->path[i], tmp->from);
+	ft_printf("ant->path[i] : %s\n", ant->path[i]);
+
+	i++;
 	while (1)
 	{
 		tmp_r = room;
@@ -123,19 +140,23 @@ void	get_path(t_ant *ant, t_room *room)
 		{
 			if (ft_strcmp(tmp_r->name, tmp->from) == 0)
 			{
-				path = tmp_r->path;
-				while (path->next != NULL && path->distance == -1)
-					path = path->next;
-				while (path->next != NULL && path->next->distance != -1)
-					path = path->next;
-				ft_printf("%d - %s\n", path->distance, path->from);
-				if (path->distance == 1)
+				tmp = get_smaller_path(room, tmp->from);
+				if (!(ant->path[i] = (char*)malloc(sizeof(char) * ft_strlen(tmp->from) + 1)))
+					ft_error("Malloc error");
+				ant->path[i] = ft_strcpy(ant->path[i], tmp->from);
+				ft_printf("ant->path[i] : %s\n", ant->path[i]);
+				if (ft_strcmp(tmp->from, ant->start) == 0)
 					return ;
-				tmp->from = path->from;
+				i++;
 			}
 			tmp_r = tmp_r->next;
 		}
 	}
+}
+
+void	ant()
+{
+
 }
 
 void	start_algo(t_global *global, t_ant *ant)
@@ -158,8 +179,10 @@ void	start_algo(t_global *global, t_ant *ant)
 		smaller_distance(ant, global->room);
 		init_path(global->room);
 		//print_test(global->room);
-		//ft_printf("ant->here : %s\n", ant->here);
+		if (ant->here == NULL && check_end(ant, global->room) == 1)
+			break ;
 		i++;
 	}
 	get_path(ant, global->room);
+	//ant();
 }

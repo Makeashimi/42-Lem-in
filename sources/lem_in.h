@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/12/30 20:31:47 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/03 20:10:26 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct		s_ant
 {
 	char			*str;
 	long			nb;
+	char			**path;
 	char			*start;
 	char			*end;
 	char			*here;
