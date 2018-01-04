@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/24 16:41:10 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/11/27 20:23:39 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/04 19:26:59 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_pipe	*create_pipe(void)
 
 	if (!(pipe = (t_pipe*)malloc(sizeof(t_pipe))))
 		ft_error("Malloc error");
-	pipe->next = NULL;
+	ft_memset(pipe, 0, sizeof(t_pipe));
 	return (pipe);
 }
 

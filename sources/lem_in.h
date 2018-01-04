@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/03 20:10:26 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/04 23:27:45 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,11 +92,13 @@ int					is_pipe(t_pipe *pipe, char *str);
 ** Fonctions used for the real algo
 */
 
-void				start_algo(t_global *global, t_ant *ant);
+int					start_algo(t_global *global, t_ant *ant);
 int					check_end(t_ant *ant, t_room *room);
 void				init_path(t_room *room);
 int					copy_last(t_ant *ant, t_room *room);
 t_path				*get_smaller_path(t_room *room, char *str);
+int					register_path(t_ant *ant, t_room *room);
+void				write_ant(t_ant *ant, int len);
 
 
 /*

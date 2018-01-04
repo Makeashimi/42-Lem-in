@@ -1,24 +1,10 @@
-1
+3
 ##start
-room0 0 0
-room1 1 1
-room2 2 2
-room3 3 3
-room4 4 4
+0 1 0
 ##end
-room5 5 5
-room6 6 6
-room7 7 7
-room8 8 8
-room9 9 9
-room7-room8
-room6-room7
-room5-room6
-room0-room1
-room0-room2
-room3-room1
-room1-room4
-room2-room5
-room8-room9
-room3-room6
-room4-room6
+1 5 0
+2 9 0
+3 13 0
+0-2
+2-3
+3-1

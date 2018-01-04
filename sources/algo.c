@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:52:53 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/03 20:35:38 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/04 23:28:25 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,61 +107,10 @@ void	smaller_distance(t_ant *ant, t_room *room)
 	ant->here = here;
 }
 
-void	get_path(t_ant *ant, t_room *room)
-{
-	t_room		*tmp_r;
-	t_path		*tmp;
-	int			i;
-
-	i = 0;
-	tmp = get_smaller_path(room, ant->end);
-	if (tmp == NULL)
-		ft_error("No path found");
-	if (!(ant->path = (char**)malloc(sizeof(char*) * (tmp->distance + 2))))
-		ft_error("Malloc error");
-	ant->path[tmp->distance + 1] = NULL;
-
-	if (!(ant->path[i] = (char*)malloc(sizeof(char) * ft_strlen(ant->end) + 1)))
-		ft_error("Malloc error");
-	ant->path[i] = ft_strcpy(ant->path[i], ant->end);
-	ft_printf("ant->path[i] : %s\n", ant->path[i]);
-
-	i++;
-	if (!(ant->path[i] = (char*)malloc(sizeof(char) * ft_strlen(tmp->from) + 1)))
-		ft_error("Malloc error");
-	ant->path[i] = ft_strcpy(ant->path[i], tmp->from);
-	ft_printf("ant->path[i] : %s\n", ant->path[i]);
-
-	i++;
-	while (1)
-	{
-		tmp_r = room;
-		while (tmp_r != NULL)
-		{
-			if (ft_strcmp(tmp_r->name, tmp->from) == 0)
-			{
-				tmp = get_smaller_path(room, tmp->from);
-				if (!(ant->path[i] = (char*)malloc(sizeof(char) * ft_strlen(tmp->from) + 1)))
-					ft_error("Malloc error");
-				ant->path[i] = ft_strcpy(ant->path[i], tmp->from);
-				ft_printf("ant->path[i] : %s\n", ant->path[i]);
-				if (ft_strcmp(tmp->from, ant->start) == 0)
-					return ;
-				i++;
-			}
-			tmp_r = tmp_r->next;
-		}
-	}
-}
-
-void	ant()
-{
-
-}
-
-void	start_algo(t_global *global, t_ant *ant)
+int		start_algo(t_global *global, t_ant *ant)
 {
 	int		distance;
+	int		len;
 	int		i;
 
 	i = 0;
@@ -183,6 +132,6 @@ void	start_algo(t_global *global, t_ant *ant)
 			break ;
 		i++;
 	}
-	get_path(ant, global->room);
-	//ant();
+	len = register_path(ant, global->room);
+	return (len);
 }

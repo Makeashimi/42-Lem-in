@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 18:47:09 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/03 12:15:25 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/04 19:23:50 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_room	*create_room(void)
 
 	if (!(room = (t_room*)malloc(sizeof(t_room))))
 		ft_error("Malloc error");
-	room->next = NULL;
+	ft_memset(room, 0, sizeof(t_room));
 	return (room);
 }
 
