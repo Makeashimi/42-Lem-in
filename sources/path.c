@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/04 20:47:39 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/04 23:29:02 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/05 21:34:40 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,78 @@ void			write_ant(t_ant *ant, int len)
 		ft_printf("path[%d] : %s\n", i, ant->path[i]);
 		i++;
 	}
-	ft_printf("len : %d\n", len);
+	int		cal;
+	int		nb;
+	int		fourmi;
+	int		LEN;
+	int		cpylen;
+
+	LEN = len;
+	nb = 1;
+	i = 0;
 	len--;
-	i = 1;
-	//boucle nb fourmi = ant->nb ? && la derniere case du tableau = ant->end
-	while (i <= ant->nb && ft_strcmp(ant->path[len + 1], ant->end) != 0)
+	cpylen = len;
+	while (nb <= ant->nb)
 	{
-		ft_printf("L%d-%s\n", i, ant->path[len]);
-		len--;
+		cal = 0;
+		fourmi = 1;
+		len = cpylen - i;
+		//ft_printf("\nlen : %d", len);
+		if (len < 0)
+			break ;
+		ft_printf("\n");
+		while (cal < nb)
+		{
+			if (cal != 0)
+				ft_printf(" ");
+			ft_printf("L%d-%s", fourmi, ant->path[len]);
+			fourmi++;
+			len++;
+			cal++;
+		}
+		i++;
+		nb++;
+	}
+	int nb2 = 0;
+	nb = 1;
+	fourmi = 2;
+	while (fourmi <= ant->nb)
+	{
+		i = 0;
+		nb2 = 0;
+		fourmi = nb + 1;
+		ft_printf("\n");
+		//ft_printf("LEN : %d\n", LEN);
+		while (nb2 < LEN)
+		{
+			ft_printf("L%d-%s ", fourmi, ant->path[i]);
+			nb2++;
+			fourmi++;
+			i++;
+		}
+		nb++;
+	}
+	fourmi--;
+	nb++;
+	fourmi = nb;
+	nb = --LEN;
+	cpylen = fourmi;
+	while (nb >= 0)
+	{
+		cal = nb;
+		fourmi = cpylen;
+		i = 0;
+		ft_printf("\n");
+		while (cal > 0)
+		{
+			if (cal != nb)
+				ft_printf(" ");
+			ft_printf("L%d-%s", fourmi, ant->path[i]);
+			i++;
+			fourmi++;
+			cal--;
+		}
+		cpylen++;
+		nb--;
 	}
 }
