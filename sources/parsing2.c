@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 19:00:06 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/08 18:04:01 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/09 20:13:31 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,6 @@ static int	is_two_pipe(t_pipe *pipe, char *s1, char *s2)
 	return (0);
 }
 
-static void	remove_pipe(t_pipe *pipe)
-{
-	t_pipe		*next;
-
-	while (pipe != NULL)
-	{
-		next = pipe->next;
-		free(pipe->s1);
-		free(pipe->s2);
-		free(pipe);
-		pipe = next;
-	}
-}
-
 static void	compare_valid_pipe(t_global *global)
 {
 	t_pipe		*tmp;
@@ -86,7 +72,7 @@ static void	compare_valid_pipe(t_global *global)
 	}
 }
 
-void		compare_pipe(t_global *global)
+void		compare_pipe(t_ant *ant, t_global *global)
 {
 	t_pipe		*tmp;
 
@@ -94,9 +80,9 @@ void		compare_pipe(t_global *global)
 	while (tmp != NULL)
 	{
 		if (ft_strcmp(tmp->s1, tmp->s2) == 0)
-			ft_error("Two times the same room");
+			error(ant, global, "Two times the same room");
 		if (is_two_pipe(tmp->next, tmp->s1, tmp->s2) == 1)
-			ft_error("Two times the same pipe");
+			error(ant, global, "Two times the same pipe");
 		tmp = tmp->next;
 	}
 	compare_valid_pipe(global);

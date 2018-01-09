@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/02 13:20:28 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/08 20:46:25 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/09 19:43:56 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int			copy_last(t_ant *ant, t_room *room)
 			while (tmp->next != NULL)
 				tmp = tmp->next;
 			tmp->distance = take->distance;
-			tmp->from = take->from;
+			tmp->from = ft_strdup(take->from);
 		}
 		tmp_r = tmp_r->next;
 	}

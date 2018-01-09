@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/12/14 12:18:49 by jcharloi          #+#    #+#             */
-/*   Updated: 2017/06/16 16:51:49 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/09 17:07:51 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	ft_tabdel(char ***tab)
 		i++;
 	}
 	free(*tab);
+	(*tab) = NULL;
 }

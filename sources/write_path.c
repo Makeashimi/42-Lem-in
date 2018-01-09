@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/08 20:30:43 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/08 20:45:09 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/09 15:45:56 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void			end_ant(t_ant *ant, int previous_fourmi, int cpylen, int i)
 		{
 			if (cal != nb)
 				ft_printf(" ");
-			ft_printf("L%d-%s", fourmi, ant->path[cpylen]);
+			color_ant(fourmi, ant->path[cpylen]);
 			fourmi++;
 			cpylen++;
 			cal--;
@@ -72,7 +72,7 @@ void			middle_ant(t_ant *ant, int cpylen)
 		{
 			if (space > 0)
 				ft_printf(" ");
-			ft_printf("L%d-%s", fourmi, ant->path[cpylen]);
+			color_ant(fourmi, ant->path[cpylen]);
 			space++;
 			fourmi++;
 			cpylen++;
@@ -86,7 +86,7 @@ void			print_ants(t_ant *ant, int *cal, int *fourmi, int *cpylen)
 {
 	if (*cal != 0)
 		ft_printf(" ");
-	ft_printf("L%d-%s", *fourmi, ant->path[*cpylen]);
+	color_ant(*fourmi, ant->path[*cpylen]);
 	*fourmi = *fourmi + 1;
 	*cpylen = *cpylen + 1;
 	*cal = *cal + 1;

@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/25 16:25:23 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/07 20:47:48 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/09 20:13:06 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int		cmp_room_name(t_room *tmp, char *str)
 	return (0);
 }
 
-void	compare_room(t_global *global)
+void	compare_room(t_ant *ant, t_global *global)
 {
 	t_room *tmp;
 
@@ -56,14 +56,14 @@ void	compare_room(t_global *global)
 	while (tmp != NULL)
 	{
 		if (cmp_room_name(tmp->next, tmp->name) == 1)
-			ft_error("Two times the same name of a room");
+			error(ant, global, "Two times the same name of a room");
 		if (cmp_room_coordinate(tmp->next, tmp->x, tmp->y) == 1)
-			ft_error("Two times the same coordinate of a room");
+			error(ant, global, "Two times the same coordinate of a room");
 		tmp = tmp->next;
 	}
 }
 
-void	get_start(t_ant *ant, t_ant *cpy)
+void	get_start(t_ant *ant, t_ant *cpy, t_global *global)
 {
 	t_ant	*tmp;
 
@@ -71,20 +71,20 @@ void	get_start(t_ant *ant, t_ant *cpy)
 	while (tmp != NULL && ft_strcmp(tmp->str, "##start") != 0)
 		tmp = tmp->next;
 	if (tmp == NULL || tmp->next == NULL)
-		ft_error("ERROR : No start room");
+		error(ant, global, "ERROR : No start room");
 	tmp = tmp->next;
-	check_form(tmp->str);
+	check_form(ant, global, tmp->str);
 	ant->start = (char*)malloc(sizeof(char) * ft_strsrchi(tmp->str, ' ') + 1);
 	ant->start = strcpy_until(ant->start, tmp->str, ' ');
 	while (tmp != NULL)
 	{
 		if (ft_strcmp(tmp->str, "##start") == 0)
-			ft_error("ERROR : Multiple start room");
+			error(ant, global, "ERROR : Multiple start room");
 		tmp = tmp->next;
 	}
 }
 
-void	get_end(t_ant *ant, t_ant *cpy)
+void	get_end(t_ant *ant, t_ant *cpy, t_global *global)
 {
 	t_ant	*tmp;
 
@@ -92,15 +92,15 @@ void	get_end(t_ant *ant, t_ant *cpy)
 	while (tmp != NULL && ft_strcmp(tmp->str, "##end") != 0)
 		tmp = tmp->next;
 	if (tmp == NULL || tmp->next == NULL)
-		ft_error("ERROR : No end room");
+		error(ant, global, "ERROR : No end room");
 	tmp = tmp->next;
-	check_form(tmp->str);
+	check_form(ant, global, tmp->str);
 	ant->end = (char*)malloc(sizeof(char) * ft_strsrchi(tmp->str, ' ') + 1);
 	ant->end = strcpy_until(ant->end, tmp->str, ' ');
 	while (tmp != NULL)
 	{
 		if (ft_strcmp(tmp->str, "##end") == 0)
-			ft_error("ERROR : Multiple end room");
+			error(ant, global, "ERROR : Multiple end room");
 		tmp = tmp->next;
 	}
 }

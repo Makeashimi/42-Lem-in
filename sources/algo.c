@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/15 18:52:53 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/08 17:59:21 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/09 20:18:29 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	start_algo(t_global *global, t_ant *ant)
 	i = 0;
 	distance = 1;
 	ant->here = ant->start;
-	init_path(global->room);
+	init_path(ant, global, global->room);
 	while (check_end(ant, global->room) == 1)
 	{
 		if (i == 0)
@@ -117,10 +117,11 @@ void	start_algo(t_global *global, t_ant *ant)
 		close_here(ant, global->room);
 		find_branch(ant, global, distance);
 		smaller_distance(ant, global->room);
-		init_path(global->room);
+		init_path(ant, global, global->room);
 		if (ant->here == NULL && check_end(ant, global->room) == 1)
 			break ;
 		i++;
 	}
-	register_path(ant, global->room);
+	//print_test(global->room);
+	register_path(global, ant, global->room);
 }

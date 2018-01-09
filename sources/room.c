@@ -6,84 +6,88 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/19 21:08:48 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/07 20:48:11 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/09 20:33:12 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void			check_form(char *str)
+void			check_form(t_ant *ant, t_global *global, char *str)
 {
 	int		i;
 
 	i = 0;
 	if (str_nbr_i(str, ' ') != 2)
-		ft_error("Non-conforming room");
+		error(ant, global, "Non-conforming room");
 	if (str[i] == ' ')
-		ft_error("Non-conforming room2");
+		error(ant, global, "Non-conforming room2");
 	while (str[i] != ' ')
 		i++;
 	i++;
 	if (str[i] == ' ')
-		ft_error("Non-conforming room3");
+		error(ant, global, "Non-conforming room3");
 	while (str[i] != ' ')
 		i++;
 	i++;
 	if (str[i] == ' ' || str[i] == 0)
-		ft_error("Non-conforming room4");
+		error(ant, global, "Non-conforming room4");
 }
 
-static void		control_name_room(char *str)
+static void		control_name_room(t_ant *ant, t_global *global, char *str)
 {
 	int		i;
 
 	i = 0;
 	if (str[0] == 'L')
-		ft_error("Non-conforming name of the room");
+		error(ant, global, "Non-conforming name of the room");
 	while (str[i] != '\0')
 	{
 		if (str[i] == '-')
-			ft_error("Non-conforming name of the room");
+			error(ant, global, "Non-conforming name of the room");
 		i++;
 	}
 }
 
-static void		control_coordinate(char *str)
+static void		control_coordinate(t_ant *ant, t_global *global, char *str)
 {
 	long	nb;
 
 	if (str[0] == '-')
-		ft_error("Not accepting negative coordinate of the room");
+		error(ant, global, "Not accepting negative coordinate of the room");
 	if (str_digit(str) == 0)
-		ft_error("Non-conforming coordinate of the room");
+		error(ant, global, "Non-conforming coordinate of the room");
 	if (ft_strlen(str) > 10)
-		ft_error("ERROR : Coordinate of the room is bigger than an integer");
+		error(ant, global, "ERROR : Coordinate of the room is bigger than an integer");
 	nb = ft_atol(str);
 	if (nb > 2147483647)
-		ft_error("ERROR : Coordinate of the room is bigger than an integer");
+		error(ant, global, "ERROR : Coordinate of the room is bigger than an integer");
 }
 
-void			check_content(t_room *room, char *str)
+void			check_content(t_ant *ant, t_global *global, t_room *room, char *str)
 {
+	//char	*tmp;
 	char	*cpy;
 	int		i;
 
 	i = 0;
-	room->name = ft_strsub(str, 0, ft_strsrchi(str, ' '));
-	control_name_room(room->name);
+	//tmp = str;
+	if (!(room->name = ft_strsub(str, 0, ft_strsrchi(str, ' '))))
+		error(ant, global, "Malloc error");
+	//free(tmp);
+	control_name_room(ant, global, room->name);
 	while (str[i] != ' ')
 		i++;
 	i++;
 	if (!(cpy = (char*)malloc(sizeof(char) * ft_strlen(str))))
-		ft_error("Malloc error");
+		error(ant, global, "Malloc error");
 	cpy = strcpy_until(cpy, str + i, ' ');
-	control_coordinate(cpy);
+	control_coordinate(ant, global, cpy);
 	room->x = ft_atol(cpy);
 	while (str[i] != ' ')
 		i++;
 	i++;
 	cpy = strcpy_until(cpy, str + i, ' ');
-	control_coordinate(cpy);
+	control_coordinate(ant, global, cpy);
 	room->y = ft_atol(cpy);
 	ft_strdel(&cpy);
 }

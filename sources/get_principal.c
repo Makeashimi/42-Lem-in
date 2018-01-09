@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/29 18:47:09 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/04 19:23:50 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/09 20:02:40 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,57 +39,57 @@
 **					- Un 0 apres le -
 */
 
-static t_room	*create_room(void)
+static t_room	*create_room(t_ant *ant, t_global *global)
 {
 	t_room	*room;
 
 	if (!(room = (t_room*)malloc(sizeof(t_room))))
-		ft_error("Malloc error");
+		error(ant, global, "Malloc error");
 	ft_memset(room, 0, sizeof(t_room));
 	return (room);
 }
 
-static t_room	*link_room(t_room *room)
+static t_room	*link_room(t_room *room, t_ant *ant, t_global *global)
 {
 	t_room *tmp;
 
 	tmp = room;
 	if (tmp == NULL)
 	{
-		room = create_room();
+		room = create_room(ant, global);
 		return (room);
 	}
 	while (tmp->next != NULL)
 		tmp = tmp->next;
-	tmp->next = create_room();
+	tmp->next = create_room(ant, global);
 	return (room->next);
 }
 
-t_ant			*find_room(t_global *global, t_ant *cpy, t_room *room)
+t_ant			*find_room(t_global *global, t_ant *cpy, t_room *room, t_ant *ant)
 {
 	if (cpy == NULL)
-		ft_error("No room");
+		error(ant, global, "No room");
 	while (cpy != NULL && find_pipe(cpy->str) == 0)
 	{
 		while (cpy != NULL && cpy->str[0] == '#')
 			cpy = cpy->next;
 		if (cpy == NULL)
-			ft_error("No room or no pipe");
+			error(ant, global, "No room or no pipe");
 		if (find_pipe(cpy->str) == 1)
 			break ;
-		room = link_room(room);
+		room = link_room(room, ant, global);
 		if (global->room == NULL)
 			global->room = room;
-		check_form(cpy->str);
-		check_content(room, cpy->str);
+		check_form(ant, global, cpy->str);
+		check_content(ant, global, room, cpy->str);
 		cpy = cpy->next;
 	}
 	if (global->room == NULL)
-		ft_error("No room");
+		error(ant, global, "No room");
 	return (cpy);
 }
 
-void			get_ant(t_ant *ant)
+void			get_ant(t_ant *ant, t_global *global)
 {
 	t_ant	*tmp;
 
@@ -101,17 +101,17 @@ void			get_ant(t_ant *ant)
 		if (str_digit(tmp->str) == 1)
 		{
 			if (ft_strlen(tmp->str) > 10)
-				ft_error("ERROR : Number of ants is bigger than an integer");
+				error(ant, global, "ERROR : Number of ants is bigger than an integer");
 			else
 				ant->nb = ft_atol(tmp->str);
 		}
 		else
-			ft_error("ERROR : Non-conforming number of ants");
+			error(ant, global, "ERROR : Non-conforming number of ants");
 	}
 	else
-		ft_error("ERROR : No ants or non-conforming number of ants");
+		error(ant, global, "ERROR : No ants or non-conforming number of ants");
 	if (ant->nb > 2147483647)
-		ft_error("ERROR : Number of ants is bigger than an integer");
+		error(ant, global, "ERROR : Number of ants is bigger than an integer");
 	if (ant->nb < 1)
-		ft_error("ERROR : Wrong number of ants");
+		error(ant, global, "ERROR : Wrong number of ants");
 }

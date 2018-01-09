@@ -6,7 +6,7 @@
 /*   By: jcharloi <jcharloi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 16:05:04 by jcharloi          #+#    #+#             */
-/*   Updated: 2018/01/08 20:46:15 by jcharloi         ###   ########.fr       */
+/*   Updated: 2018/01/09 20:18:10 by jcharloi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 
 # include "libft/libft.h"
 
-# define YELLOW "\033[38;5;228m"
-# define ORANGE "\033[38;5;214m"
-# define RED "\033[49;31m"
+// # define YELLOW "\033[38;5;228m"
+// # define ORANGE "\033[38;5;214m"
+// # define RED "\033[49;31m"
 # define PURPLE "\033[49;35m"
 # define BLUE "\033[49;34m"
-# define GREEN "\033[33;32m"
+// # define GREEN "\033[33;32m"
 # define EOC "\033[0m"
 
 typedef struct		s_ant
@@ -77,36 +77,36 @@ typedef struct		s_global
 ** Fonctions used for parsing
 */
 
-void				get_ant(t_ant *ant);
-t_ant				*find_room(t_global *global, t_ant *ant, t_room *room);
-void				check_form(char *str);
-void				check_content(t_room *room, char *str);
+void				get_ant(t_ant *ant, t_global *global);
+t_ant				*find_room(t_global *global, t_ant *cpy, t_room *room, t_ant *ant);
+void				check_form(t_ant *ant, t_global *global, char *str);
+void				check_content(t_ant *ant, t_global *global, t_room *room, char *str);
 int					find_pipe(char *str);
-void				check_pipe(t_global *global, t_ant *cpy, t_pipe *pipe);
-void				get_start(t_ant *ant, t_ant *cpy);
-void				get_end(t_ant *ant, t_ant *cpy);
-void				compare_room(t_global *global);
-void				compare_pipe(t_global *global);
+void				check_pipe(t_ant *ant, t_global *global, t_ant *cpy, t_pipe *pipe);
+void				get_start(t_ant *ant, t_ant *cpy, t_global *global);
+void				get_end(t_ant *ant, t_ant *cpy, t_global *global);
+void				compare_room(t_ant *ant, t_global *global);
+void				compare_pipe(t_ant *ant, t_global *global);
 int					is_pipe(t_pipe *pipe, char *str);
 
 /*
-** Fonctions used for the real algo
+** Fonctions used for the algo
 */
 
 void				start_algo(t_global *global, t_ant *ant);
 int					check_end(t_ant *ant, t_room *room);
-void				init_path(t_room *room);
+void				init_path(t_ant *ant, t_global *global, t_room *room);
 int					copy_last(t_ant *ant, t_room *room);
 int					check_close(t_path *path);
 t_path				*get_smaller_path(t_room *room, char *str, t_path *take);
-void				register_path(t_ant *ant, t_room *room);
+void				register_path(t_global *global, t_ant *ant, t_room *room);
 int					start_end_linked(t_ant *ant);
 void				begin_ant(t_ant *ant, int nb, int fourmi, int cpylen);
-
-/*
-** A SUPPRIMER !
-*/
-
-void				print_test(t_room *room);
+void				color_ant(int fourmi, char *str);
+void				error(t_ant *ant, t_global *global, char *str);
+void				remove_ant(t_ant *ant);
+void				remove_room(t_room *room);
+void				remove_pipe(t_pipe *pipe);
+//void				print_test(t_room *room);
 
 #endif
